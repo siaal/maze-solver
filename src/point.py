@@ -17,6 +17,9 @@ class Point:
     def __repr__(self):
         return f"({self.x}, {self.y})"
 
+    def __hash__(self) -> int:
+        return (self.x, self.y).__hash__()
+
     def move(self, direction: Direction):
         x = self.x
         y = self.y
@@ -29,3 +32,8 @@ class Point:
                 return Point(x, y - 1)
             case Direction.WEST:
                 return Point(x - 1, y)
+
+    def __eq__(self, value: object, /) -> bool:
+        if type(value) != Point:
+            return False
+        return self.x == value.x and self.y == value.y

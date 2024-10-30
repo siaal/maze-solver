@@ -30,3 +30,7 @@ class Window:
 
     def draw_line(self, line: Line, fill_colour: str):
         line.draw(self._canvas, fill_colour)
+
+    def bind(self, binding, f):
+        print("ACTIVATING")
+        self._root.bind(binding, f)

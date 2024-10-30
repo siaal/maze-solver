@@ -7,14 +7,18 @@ from point import Point
 
 class Tests(unittest.TestCase):
     def test_maze_create_cells(self):
+        cols = 12
+        rows = 16
+        top_left = Point(0, 0)
+        m1 = Maze(None, top_left, rows, cols, 10, 10)
+        self.assertEqual(len(m1._cells), rows)  # [row][column] access
+        for row in m1._cells:
+            self.assertEqual(len(row), cols)
+
         cols = 5
         rows = 5
         top_left = Point(0, 0)
         m1 = Maze(None, top_left, rows, cols, 10, 10)
-
-        self.assertEqual(len(m1._cells), rows)
-        for row in m1._cells:
-            self.assertEqual(len(row), cols)
 
         cells = m1._cells
         zero = cells[0][0]
