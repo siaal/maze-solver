@@ -7,10 +7,10 @@ from window import Window
 
 def main():
     win = Window(800, 600)
-    m = Maze(win, Point(100, 100), 20, 20, 25, 25, speed=0.01)
+    m = Maze(win, Point(00, 00), 2, 2, 50, 50, speed=0.01)
     m.draw_cells()
     m.break_entrance_and_exit()
-    m._break_walls(Point(9, 9))
+    m._break_walls(Point(0, -1))
     win.wait_for_close()
 
 

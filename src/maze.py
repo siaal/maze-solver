@@ -65,7 +65,7 @@ class Maze:
                 return
             out = outs[random.randint(0, len(outs) - 1)]
 
-            self.remove_wall(point.x, point.y, Wall.from_direction(out))
+            self.remove_wall(point, Wall.from_direction(out))
             self._break_walls(point.move(out))
 
     def draw_cells(self):
@@ -78,13 +78,13 @@ class Maze:
 
     def break_entrance_and_exit(self):
         assert self._cells
-        self._cells[0][0].wall_remove(Wall.NORTH_WALL)
-        self._cells[-1][-1].wall_remove(Wall.SOUTH_WALL)
+        self._cells[-1][0].wall_remove(Wall.NORTH_WALL)
+        self._cells[0][-1].wall_remove(Wall.SOUTH_WALL)
 
     @staticmethod
     def _create_cells(top_left: Point, num_rows, num_cols, cell_width, cell_height):
         cells = []
-        tl_y = top_left.y
+        tl_y = top_left.y + ((num_rows - 1) * cell_height)
         for _ in range(num_rows):
             tl_x = top_left.x
             row = []
@@ -99,26 +99,18 @@ class Maze:
                 tl_x += cell_width
 
             cells.append(row)
-            tl_y += cell_height
+            tl_y -= cell_height
 
         return cells
 
-    def remove_wall(self, row: int, col: int, wall: Wall):
-        cell = self._cells[row][col]
+    def remove_wall(self, point: Point, wall: Wall):
+        cell = self._cells[point.x][point.y]
         cell.wall_remove(wall)
-        match wall:
-            case Wall.EAST_WALL:
-                neighbor = (row, col + 1)
-            case Wall.WEST_WALL:
-                neighbor = (row, col - 1)
-            case Wall.SOUTH_WALL:
-                neighbor = (row + 1, col)
-            case Wall.NORTH_WALL:
-                neighbor = (row - 1, col)
-        if neighbor[0] < len(self._cells):
-            cell_row = self._cells[neighbor[0]]
-            if neighbor[1] < len(cell_row):
-                cell = cell_row[neighbor[1]]
+        neighbor = point.move(wall.to_direction())
+        if neighbor.x < len(self._cells):
+            cell_row = self._cells[neighbor.x]
+            if neighbor.y < len(cell_row):
+                cell = cell_row[neighbor.y]
                 wall = wall.opposite()
                 cell.wall_remove(wall)
 

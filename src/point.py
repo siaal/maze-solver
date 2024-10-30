@@ -18,14 +18,14 @@ class Point:
         return f"({self.x}, {self.y})"
 
     def move(self, direction: Direction):
-        i = self.x
-        j = self.y
+        x = self.x
+        y = self.y
         match direction:
             case Direction.NORTH:
-                return Point(i - 1, j)
+                return Point(x, y + 1)
             case Direction.EAST:
-                return Point(i, j + 1)
+                return Point(x + 1, y)
             case Direction.SOUTH:
-                return Point(i + 1, j)
+                return Point(x, y - 1)
             case Direction.WEST:
-                return Point(i, j - 1)
+                return Point(x - 1, y)

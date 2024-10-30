@@ -31,6 +31,17 @@ class Wall(enum.IntEnum):
             case Direction.EAST:
                 return Wall.EAST_WALL
 
+    def to_direction(self):
+        match (self):
+            case Wall.NORTH_WALL:
+                return Direction.NORTH
+            case Wall.EAST_WALL:
+                return Direction.EAST
+            case Wall.WEST_WALL:
+                return Direction.WEST
+            case Wall.SOUTH_WALL:
+                return Direction.SOUTH
+
 
 ALL_WALLS = Wall.EAST_WALL | Wall.SOUTH_WALL | Wall.WEST_WALL | Wall.NORTH_WALL
 
